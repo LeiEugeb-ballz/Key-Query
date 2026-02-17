@@ -34,6 +34,8 @@ async function testKey(provider: string, apiKey: string) {
       return await testTogether(apiKey);
     case "openrouter":
       return await testOpenRouter(apiKey);
+    case "google":
+      return await testGoogle(apiKey);
     // Add more cases
     default:
       return { status: "error", message: "Provider not supported" };

@@ -16,6 +16,7 @@ The template is a clean Next.js 16 starter with TypeScript and Tailwind CSS 4. I
 - [x] Recipe system for common features
 - [x] API Key Tester application with UI and backend for testing API keys across multiple providers
 - [x] Added OpenRouter API key testing support
+- [x] Added Google Gemini API key testing support
 
 ## Current Structure
 
@@ -86,3 +87,4 @@ export async function GET() {
 | Initial | Template created with base setup |
 | 2026-02-17 | Built API Key Tester application with UI and backend |
 | 2026-02-17 | Added OpenRouter support to API Key Tester |
+| 2026-02-17 | Added Google Gemini support to API Key Tester |
