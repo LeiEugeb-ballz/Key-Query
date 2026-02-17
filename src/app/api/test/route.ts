@@ -32,6 +32,8 @@ async function testKey(provider: string, apiKey: string) {
       return await testReplicate(apiKey);
     case "together":
       return await testTogether(apiKey);
+    case "openrouter":
+      return await testOpenRouter(apiKey);
     // Add more cases
     default:
       return { status: "error", message: "Provider not supported" };
@@ -215,6 +217,34 @@ async function testTogether(apiKey: string) {
       };
     } else if (res.status === 401) {
       return { status: "invalid", message: "Invalid API key" };
+    } else {
+      return { status: "unreachable", message: `HTTP ${res.status}` };
+    }
+  } catch (error) {
+    return { status: "unreachable", message: "Network error" };
+  }
+}
+
+async function testOpenRouter(apiKey: string) {
+  try {
+    const res = await fetch("https://openrouter.ai/api/v1/models", {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return {
+        status: "successful",
+        metadata: {
+          provider: "OpenRouter",
+          created: "N/A",
+          usable: true,
+          models: data.data?.length || 0,
+        },
+      };
+    } else if (res.status === 401) {
+      return { status: "invalid", message: "Invalid API key" };
+    } else if (res.status === 429) {
+      return { status: "insufficient credits", message: "Rate limited or insufficient credits" };
     } else {
       return { status: "unreachable", message: `HTTP ${res.status}` };
     }
